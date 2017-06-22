@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src -d lib",
+    "prettier": "prettier --single-quote --tab-width 4 --no-bracket-spacing --write \"src/**/*.js\"",
     "start": "npm run build && node lib/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,5 +22,11 @@
     "husky": "^0.13.4",
     "lint-staged": "^4.0.0",
     "prettier": "^1.4.4"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run prettier",
+      "git add"
+    ]
   }
 }

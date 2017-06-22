@@ -8,20 +8,18 @@ var markDownToPdfoptions = {
 };
 
 function addPageBreaks(data) {
-    const pageBreak = '\n\n<div style="page-break-before: always;"></div>\n\n'
+    const pageBreak = '\n\n<div style="page-break-before: always;"></div>\n\n';
     this.queue(`${data}${pageBreak}`);
 }
 
-function preProcessMd () {
+function preProcessMd() {
     return through(addPageBreaks);
 }
 
 function createPdf(files, outputFile) {
-    markdownPdf(markDownToPdfoptions)
-        .concat.from(files)
-        .to(outputFile, () => {
-            console.log(`Created : ${outputFile}`)
-        })
+    markdownPdf(markDownToPdfoptions).concat.from(files).to(outputFile, () => {
+        console.log(`Created : ${outputFile}`);
+    });
 }
 
 function leadMagnet(options) {

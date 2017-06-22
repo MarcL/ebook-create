@@ -16,9 +16,6 @@ const footer = {
 const header = {
     contents: pageTitle,
     height: headerFooterHeight
-}
-
-export {
-    header,
-    footer
 };
+
+export {header, footer};

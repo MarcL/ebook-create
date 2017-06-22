@@ -17,6 +17,9 @@
   },
   "devDependencies": {
     "babel-cli": "~6.24.1",
-    "babel-preset-env": "~1.5.2"
+    "babel-preset-env": "~1.5.2",
+    "husky": "^0.13.4",
+    "lint-staged": "^4.0.0",
+    "prettier": "^1.4.4"
   }
 }

@@ -8,13 +8,26 @@ import ebook from './ebook';
 import constants from './constants';
 
 function metalSmithPdf(options) {
+    const metadata = {
+        title: 'Test Lead Magnet Generator',
+        destination: 'Book description',
+        generator: 'LeadMagnet',
+        url: 'https://www.marclittlemore.com'
+    };
+
+    const pdfOptions = Object.assign({}, constants.pdf, {
+        // header: {
+        //     height: '20mm',
+        //     contents: `<div class="pageHeader">${metadata.title}</div>`
+        // },
+        // footer: {
+        //     height: '10mm',
+        //     contents: `<div class="pageFooter">${metadata.url}</div>`
+        // }
+    });
+
     Metalsmith(__dirname)
-        .metadata({
-            title: 'Test ebook',
-            destination: 'Book description',
-            generator: 'LeadMagnet',
-            url: 'https://www.marclittlemore.io'
-        })
+        .metadata(metadata)
         .source('../examples/src')
         .destination('../output')
         .clean(true)
@@ -33,7 +46,7 @@ function metalSmithPdf(options) {
         .use(ebook({
             title: 'Test ebook',
             author: 'Test author',
-            pdf: constants.pdf
+            pdf: pdfOptions
         }))
         .build((error, files) => {
             if (error) {

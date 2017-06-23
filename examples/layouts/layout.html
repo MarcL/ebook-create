@@ -6,23 +6,60 @@
   <meta name="description" content="{{ description }}">
   <meta name="layout" content="full-book">
 
-<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
+
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
 <style>
-body {font-family: 'Merriweather Sans', sans-serif;}
+body, html {
+  font-size: 10px;
+  font-family: 'Merriweather Sans', sans-serif;
+  line-height: 1.5;
+}
+.page {
+  page-break-after: auto;
+}
+.pageContent {
+  padding: 1.9cm 1.32cm 1.9cm 1.9cm;
+}
+.pageHeader {
+  color: grey;
+  font-size: 1em;
+  text-align: center;
+}
+.pageFooter {
+  color:grey;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.cover {
+  vertical-align: center;
+  page-break-after: always;
+}
+.cover img {
+  height: 100%;
+  width: 100%;
+}
 </style>
 </head>
 <body>
 
-{{#each collections.chapters }}
-	{{{this.contents}}}
+<div class="cover">
+  <img src="cover.jpg" />
+</div>
 
-	<div class="chapter-divider"></div>
-  {{#unless @last}}
-    <div style="page-break-before:always">&nbsp;</div>
-  {{/unless}}
+{{#each collections.chapters }}
+  <div class="page">
+    <div class="pageContent">
+      {{{this.contents}}}
+    </div>
+    {{#unless @last}}
+      <div style="page-break-after:always">&nbsp;</div>
+    {{/unless}}
+  </div>
 {{/each}}
 
 <script>hljs.initHighlightingOnLoad();</script>

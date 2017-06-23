@@ -1,4 +1,4 @@
-# Page 2
+# Chapter 2
 
 ## Hello Page 2
 

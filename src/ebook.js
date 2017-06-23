@@ -10,47 +10,48 @@ function ebookPlugin(options) {
     		return done(new Error('Please set metadata title'));
     	}
 
-        Object.keys(files).forEach(function(file){
-            console.log(file);
+        // console.log(files);
+        Object.keys(files).forEach((file) => {
+            if (file.includes('.html')) {
+                var contents = files[file].contents.toString();
+                var path = files[file].path + '/';
+                var title = files[file].title;
 
-        	var contents = files[file].contents.toString();
+                var p0 = new Promise((resolve, reject) => {
+                    let filePath;
 
-        	var path = files[file].path + '/';
+                    if (files[file].path) {
+                        filePath = destinationPath + path + title + '.pdf';
+                    } else {
+                        const bookTitle = metadata.title;
+                        filePath = destinationPath + bookTitle + '.pdf';
+                    }
 
-        	var title = files[file].title;
-
-        	var p0 = new Promise((resolve, reject) => {
-                if (files[file].path) {
-
-                    var filePath = destinationPath + path + title + '.pdf';
-
-                    createPDF(contents, options.pdf, filePath);
-                } else {
-                    const bookTitle = metadata.title;
-                    var filePath = destinationPath + bookTitle + '.pdf';
-
-                    createPDF(contents, options.pdf, filePath);
-                }
-
-                function createPDF(contents, options, filePath){
-                    console.log(`-- Writing : ${filePath}`);
-                    pdf.create(contents, options).toFile(filePath, function(err, res) {
-                        if (err) {
-                            reject();
-                        } else {
-                            resolve(contents, options);
-                        }
+                    const pdfOptions = Object.assign({}, options.pdf, {
+                        base: `file://${destinationPath}`
                     });
-                }
-            });
 
-        	p0.then(function(){
-        		console.log("PDF CREATED");
-        	}).catch((error) => {
-        		console.log('ERROR GENERATING PDF');
-                console.log(`/t${error}`);
-        	});
+                    createPDF(contents, pdfOptions, filePath);
 
+                    function createPDF(contents, options, filePath){
+                        console.log(`-- Writing : ${filePath}`);
+                        pdf.create(contents, options).toFile(filePath, function(err, res) {
+                            if (err) {
+                                reject();
+                            } else {
+                                resolve(contents, options);
+                            }
+                        });
+                    }
+                });
+
+                p0.then(function(){
+                    console.log("PDF CREATED");
+                }).catch((error) => {
+                    console.log('ERROR GENERATING PDF');
+                    console.log(`\t${error}`);
+                });
+            }
         });
 
         done();

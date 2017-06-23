@@ -5,14 +5,15 @@ import layouts from 'metalsmith-layouts';
 import permalinks from 'metalsmith-permalinks';
 import metallic from 'metalsmith-metallic';
 import ebook from './ebook';
+import constants from './constants';
 
 function metalSmithPdf(options) {
     Metalsmith(__dirname)
         .metadata({
             title: 'Test ebook',
-            destination: 'Test ebook description',
-            generator: 'Metalsmith',
-            url: 'https://www.metalsmith.io'
+            destination: 'Book description',
+            generator: 'LeadMagnet',
+            url: 'https://www.marclittlemore.io'
         })
         .source('../examples/src')
         .destination('../output')
@@ -32,10 +33,7 @@ function metalSmithPdf(options) {
         .use(ebook({
             title: 'Test ebook',
             author: 'Test author',
-            pdf: {
-                "format": "Letter",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
-                "orientation": "portrait", // portrait or landscape
-            }
+            pdf: constants.pdf
         }))
         .build((error, files) => {
             if (error) {

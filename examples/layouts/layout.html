@@ -6,9 +6,13 @@
   <meta name="description" content="{{ description }}">
   <meta name="layout" content="full-book">
 
+<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
+<style>
+body {font-family: 'Merriweather Sans', sans-serif;}
+</style>
 </head>
 <body>
 
@@ -16,7 +20,9 @@
 	{{{this.contents}}}
 
 	<div class="chapter-divider"></div>
-  <div style="page-break-before:always">&nbsp;</div>
+  {{#unless @last}}
+    <div style="page-break-before:always">&nbsp;</div>
+  {{/unless}}
 {{/each}}
 
 <script>hljs.initHighlightingOnLoad();</script>

@@ -16,14 +16,12 @@ function metalSmithPdf(options) {
     };
 
     const pdfOptions = Object.assign({}, constants.pdf, {
-        // header: {
-        //     height: '20mm',
-        //     contents: `<div class="pageHeader">${metadata.title}</div>`
-        // },
-        // footer: {
-        //     height: '10mm',
-        //     contents: `<div class="pageFooter">${metadata.url}</div>`
-        // }
+        header: {
+            contents: `<div class="pageHeader">${metadata.title}</div>`
+        },
+        footer: {
+            contents: `<div class="pageFooter">${metadata.url}</div>`
+        }
     });
 
     Metalsmith(__dirname)

@@ -22,13 +22,16 @@ body, html {
   page-break-after: auto;
 }
 .pageContent {
-  padding: 1cm 1.32cm 1cm 1.9cm;
+  padding: 0.1cm 1.32cm 1cm 1.9cm;
 }
 .pageHeader {
-  padding-top: 0.4cm;
+  margin: 0;
+  padding-top: 0.3cm;
+  padding-bottom: 0.3cm;
   color: grey;
-  font-size: 1em;
+  font-size: 1.3em;
   text-align: center;
+  background-color: #333;
 }
 .pageFooter {
   color:grey;
@@ -55,7 +58,6 @@ body, html {
 {{#each collections.chapters }}
   <div class="page">
     <div class="pageContent">
-    <div class="pageHeader">Hello</div>
       {{{this.contents}}}
     </div>
     {{#unless @last}}

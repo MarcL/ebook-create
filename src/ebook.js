@@ -34,8 +34,7 @@ function ebookPlugin(options) {
         // - Promise.all() on all promise to convert
         // - Catch any errors
 
-        // console.log(files);
-        let filePromises = [];
+        let fileList = [];
         Object.keys(files).forEach(file => {
             if (file.includes('.html')) {
                 var contents = files[file].contents.toString();
@@ -55,11 +54,11 @@ function ebookPlugin(options) {
                     base: `file://${destinationPath}`
                 });
 
-                filePromises.push(convertHtmlToPDF(contents, pdfOptions, filePath));
+                fileList.push(convertHtmlToPDF(contents, pdfOptions, filePath));
             }
         });
 
-        Promise.all(filePromises)
+        Promise.all(fileList)
             .then(convertedFileMessages => {
                 console.log('Converted all files');
                 convertedFileMessages.forEach(message => {

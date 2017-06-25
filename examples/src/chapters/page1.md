@@ -1,3 +1,7 @@
+---
+title: chapter1
+---
+
 # Chapter 1
 
 ## Hello World

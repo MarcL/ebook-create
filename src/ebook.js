@@ -1,5 +1,9 @@
 import convertHtmlToPDF from './convertHtmlToPdf';
 
+const shouldConvertFile = (fileName, metadata) => {
+    return fileName.includes('.html') && !metadata.path;
+};
+
 function ebookPlugin(options) {
     return function(files, metalsmith, done) {
         const destinationPath = `${metalsmith.destination()}/`;
@@ -18,14 +22,16 @@ function ebookPlugin(options) {
 
         let fileList = [];
         Object.keys(files).forEach(file => {
-            if (file.includes('.html')) {
-                var contents = files[file].contents.toString();
-                var path = files[file].path + '/';
-                var title = files[file].title;
+            const currentFileMetadata = files[file];
+
+            if (shouldConvertFile(file, currentFileMetadata)) {
+                const contents = currentFileMetadata.contents.toString();
+                const path = currentFileMetadata.path + '/';
+                const title = currentFileMetadata.title;
 
                 let filePath;
 
-                if (files[file].path) {
+                if (currentFileMetadata.path) {
                     filePath = destinationPath + path + title + '.pdf';
                 } else {
                     const bookTitle = metadata.title;

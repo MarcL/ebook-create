@@ -1,4 +1,5 @@
 import htmlToPdf from 'html-pdf';
+import logSymbols from 'log-symbols';
 
 function convertHtmlToPDF(contents, options, filePath) {
     return new Promise((resolve, reject) => {
@@ -7,10 +8,10 @@ function convertHtmlToPDF(contents, options, filePath) {
             .create(contents, options)
             .toFile(filePath, (error) => {
                 if (error) {
-                    const message = `❎ Error converting : ${filePath} : ${error.message}`;
+                    const message = `${logSymbols.error} Error converting : ${filePath} : ${error.message}`;
                     resolve(message);
                 } else {
-                    const message = `👍🏻 Converted : ${filePath}`;
+                    const message = `${logSymbols.success} Converted : ${filePath}`;
                     resolve(message);
                 }
             });

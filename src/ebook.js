@@ -53,7 +53,7 @@ function ebookPlugin(options) {
                     console.log(`\t${message}`);
                 });
             })
-            .catch((error) => {
+            .catch(error => {
                 console.log('Error generating PDF');
                 console.log(`\t${error}`);
             });

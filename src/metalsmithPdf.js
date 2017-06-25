@@ -50,8 +50,6 @@ function metalSmithPdf(options) {
         )
         .use(
             ebook({
-                title: 'Test ebook',
-                author: 'Test author',
                 pdf: pdfOptions
             })
         )

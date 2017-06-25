@@ -7,9 +7,11 @@ function convertHtmlToPDF(contents, options, filePath) {
             .create(contents, options)
             .toFile(filePath, (error) => {
                 if (error) {
-                    reject(error);
+                    const message = `❎ Error converting : ${filePath} : ${error.message}`;
+                    resolve(message);
                 } else {
-                    resolve(contents, options);
+                    const message = `👍🏻 Converted : ${filePath}`;
+                    resolve(message);
                 }
             });
     });
@@ -57,8 +59,11 @@ function ebookPlugin(options) {
         });
 
         Promise.all(filePromises)
-            .then(() => {
+            .then(convertedFileMessages => {
                 console.log('Converted all files');
+                convertedFileMessages.forEach(message => {
+                    console.log(`\t${message}`);
+                });
             })
             .catch((error) => {
                 console.log('Error generating PDF');

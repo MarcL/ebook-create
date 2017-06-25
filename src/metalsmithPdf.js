@@ -17,7 +17,10 @@ function metalSmithPdf(options) {
 
     const pdfOptions = Object.assign({}, constants.pdf, {
         header: {
-            contents: `<div class="pageHeader">${metadata.title}</div>`
+            contents: {
+                first: '',
+                default: `<div class="pageHeader">${metadata.title}</div>`
+            }
         },
         footer: {
             contents: `<div class="pageFooter">${metadata.url}</div>`

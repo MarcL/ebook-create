@@ -1,17 +1,17 @@
 import pdf from 'html-pdf';
 
 function ebookPlugin(options) {
-    return function (files, metalsmith, done) {
+    return function(files, metalsmith, done) {
         const destinationPath = `${metalsmith.destination()}/`;
         const metadata = metalsmith.metadata();
 
-    	// THROW ERROR IF TITLE ATTRIBUTE IS NOT SET
-    	if (!metadata.title) {
-    		return done(new Error('Please set metadata title'));
-    	}
+        // THROW ERROR IF TITLE ATTRIBUTE IS NOT SET
+        if (!metadata.title) {
+            return done(new Error('Please set metadata title'));
+        }
 
         // console.log(files);
-        Object.keys(files).forEach((file) => {
+        Object.keys(files).forEach(file => {
             if (file.includes('.html')) {
                 var contents = files[file].contents.toString();
                 var path = files[file].path + '/';
@@ -33,29 +33,33 @@ function ebookPlugin(options) {
 
                     createPDF(contents, pdfOptions, filePath);
 
-                    function createPDF(contents, options, filePath){
+                    function createPDF(contents, options, filePath) {
                         console.log(`-- Writing : ${filePath}`);
-                        pdf.create(contents, options).toFile(filePath, function(err, res) {
-                            if (err) {
-                                reject();
-                            } else {
-                                resolve(contents, options);
-                            }
-                        });
+                        pdf
+                            .create(contents, options)
+                            .toFile(filePath, (error, res) => {
+                                if (error) {
+                                    reject();
+                                } else {
+                                    resolve(contents, options);
+                                }
+                            });
                     }
                 });
 
-                p0.then(function(){
-                    console.log("PDF CREATED");
-                }).catch((error) => {
-                    console.log('ERROR GENERATING PDF');
-                    console.log(`\t${error}`);
-                });
+                p0
+                    .then(function() {
+                        console.log('PDF CREATED');
+                    })
+                    .catch(error => {
+                        console.log('ERROR GENERATING PDF');
+                        console.log(`\t${error}`);
+                    });
             }
         });
 
         done();
     };
-};
+}
 
 export default ebookPlugin;

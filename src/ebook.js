@@ -1,7 +1,8 @@
 import convertHtmlToPDF from './convertHtmlToPdf';
+import {extname} from 'path';
 
 const shouldConvertFile = (fileName, metadata) => {
-    return fileName.includes('.html') && !metadata.path;
+    return /\.html/.test(extname(fileName)) && !metadata.path;
 };
 
 function ebookPlugin(options) {

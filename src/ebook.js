@@ -1,52 +1,50 @@
 import convertHtmlToPDF from './convertHtmlToPdf';
 import {extname} from 'path';
 import slugify from 'slugify';
+import pluginKit from 'metalsmith-plugin-kit';
+import constants from './constants';
+import logSymbols from 'log-symbols';
 
 const shouldConvertFile = (fileName, metadata) => {
     return /\.html/.test(extname(fileName)) && !metadata.path;
 };
 
 function ebookPlugin(options) {
-    return function(files, metalsmith, done) {
-        const destinationPath = `${metalsmith.destination()}/`;
-        const metadata = metalsmith.metadata();
+    const optionsOverride = pluginKit.defaultOptions({
+        pdf: constants.pdf,
+        pattern: ['**/*']
+    }, options);
 
-        if (!metadata.title) {
-            return done(new Error('Please set metadata title'));
-        }
+    let destinationPath;
+    let metadata;
+    return pluginKit.middleware({
+        before: (files, metalsmith, done) => {
+            destinationPath = `${metalsmith.destination()}/`;
+            metadata = metalsmith.metadata();
 
-        let fileList = [];
-        Object.keys(files).forEach(file => {
-            const currentFileMetadata = files[file];
+            const message = metadata.title
+                ? undefined
+                : new Error(`${logSymbols.error} Please set metadata title`);
 
-            if (shouldConvertFile(file, currentFileMetadata)) {
-                const contents = currentFileMetadata.contents.toString();
-                const bookTitle = slugify(metadata.title.toLowerCase());
+            done(message);
+        },
+        each: (filename, fileObject) => {
+            const contents = fileObject.contents.toString();
+            const bookTitle = slugify(metadata.title.toLowerCase());
 
-                const filePath = `${destinationPath}${bookTitle}.pdf`;
+            const filePath = fileObject.path
+                ? `${destinationPath}${fileObject.path}${fileObject.title}.pdf`
+                : `${destinationPath}${bookTitle}.pdf`;
 
-                const pdfOptions = Object.assign({}, options.pdf, {
-                    base: `file://${destinationPath}`
-                });
-
-                fileList.push(convertHtmlToPDF(contents, pdfOptions, filePath));
-            }
-        });
-
-        Promise.all(fileList)
-            .then(convertedFileMessages => {
-                console.log('Converted all files');
-                convertedFileMessages.forEach(message => {
-                    console.log(`\t${message}`);
-                });
-            })
-            .catch(error => {
-                console.log('Error generating PDF');
-                console.log(`\t${error}`);
+            const pdfOptions = Object.assign({}, options.pdf, {
+                base: `file://${destinationPath}`
             });
 
-        done();
-    };
+            return convertHtmlToPDF(contents, pdfOptions, filePath)
+                .then(message => console.log(message));
+        },
+        match: optionsOverride.pattern
+    });
 }
 
 export default ebookPlugin;

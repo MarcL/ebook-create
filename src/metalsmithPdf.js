@@ -53,6 +53,7 @@ function metalSmithPdf(options) {
         )
         .use(
             ebook({
+                pattern: '**/*.html',
                 pdf: pdfOptions
             })
         )

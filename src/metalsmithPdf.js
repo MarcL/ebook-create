@@ -9,9 +9,9 @@ import constants from './constants';
 
 function metalSmithPdf(options) {
     const metadata = {
-        title: 'Test Lead Magnet Generator',
+        title: 'Test EBook Create',
         destination: 'Book description',
-        generator: 'LeadMagnet',
+        generator: 'ebook-create',
         url: 'https://www.marclittlemore.com'
     };
 

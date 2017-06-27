@@ -1,5 +1,6 @@
 import convertHtmlToPDF from './convertHtmlToPdf';
 import {extname} from 'path';
+import slugify from 'slugify';
 
 const shouldConvertFile = (fileName, metadata) => {
     return /\.html/.test(extname(fileName)) && !metadata.path;
@@ -20,7 +21,7 @@ function ebookPlugin(options) {
 
             if (shouldConvertFile(file, currentFileMetadata)) {
                 const contents = currentFileMetadata.contents.toString();
-                const bookTitle = metadata.title;
+                const bookTitle = slugify(metadata.title.toLowerCase());
 
                 const filePath = `${destinationPath}${bookTitle}.pdf`;
 

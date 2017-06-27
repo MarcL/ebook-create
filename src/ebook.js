@@ -14,30 +14,15 @@ function ebookPlugin(options) {
             return done(new Error('Please set metadata title'));
         }
 
-        // TODO:
-        // - Convert files object to array
-        // - Filter files to remove non-HTML names
-        // - Create promise for each file conversion
-        // - Promise.all() on all promise to convert
-        // - Catch any errors
-
         let fileList = [];
         Object.keys(files).forEach(file => {
             const currentFileMetadata = files[file];
 
             if (shouldConvertFile(file, currentFileMetadata)) {
                 const contents = currentFileMetadata.contents.toString();
-                const path = currentFileMetadata.path + '/';
-                const title = currentFileMetadata.title;
+                const bookTitle = metadata.title;
 
-                let filePath;
-
-                if (currentFileMetadata.path) {
-                    filePath = destinationPath + path + title + '.pdf';
-                } else {
-                    const bookTitle = metadata.title;
-                    filePath = destinationPath + bookTitle + '.pdf';
-                }
+                const filePath = `${destinationPath}${bookTitle}.pdf`;
 
                 const pdfOptions = Object.assign({}, options.pdf, {
                     base: `file://${destinationPath}`

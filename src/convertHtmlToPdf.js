@@ -5,13 +5,11 @@ function convertHtmlToPDF(contents, options, filePath) {
     return new Promise((resolve, reject) => {
         console.log(`-- Converting : ${filePath}`);
         htmlToPdf.create(contents, options).toFile(filePath, error => {
-            if (error) {
-                const message = `${logSymbols.error} Error converting : ${filePath} : ${error.message}`;
-                resolve(message);
-            } else {
-                const message = `${logSymbols.success} Converted : ${filePath}`;
-                resolve(message);
-            }
+            const message = error
+                ? `${logSymbols.error} Error converting : ${filePath} : ${error.message}`
+                : `${logSymbols.success} Converted : ${filePath}`;
+
+            resolve(message);
         });
     });
 }

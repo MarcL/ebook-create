@@ -16,15 +16,18 @@ function metalSmithPdf(options) {
     };
 
     const pdfOptions = Object.assign({}, constants.pdf, {
-        header: {
-            contents: {
-                first: '',
-                default: `<div class="pageHeader">${metadata.title}</div>`
-            }
-        },
-        footer: {
-            contents: `<div class="pageFooter">${metadata.url}</div>`
-        }
+        // header: {
+        //     contents: {
+        //         first: '<div class="pageHeader">Front page</div>',
+        //         default: `<div class="pageHeader">${metadata.title}</div>`
+        //     }
+        // },
+        // footer: {
+        //     contents: {
+        //         first: '<div class="pageHeader">Front page footer</div>',
+        //         default: `<div class="pageFooter">${metadata.url}</div>`
+        //     }
+        // }
     });
 
     Metalsmith(__dirname)

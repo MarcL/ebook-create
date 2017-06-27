@@ -1,13 +1,8 @@
 import convertHtmlToPDF from './convertHtmlToPdf';
-import {extname} from 'path';
 import slugify from 'slugify';
 import pluginKit from 'metalsmith-plugin-kit';
 import constants from './constants';
 import logSymbols from 'log-symbols';
-
-const shouldConvertFile = (fileName, metadata) => {
-    return /\.html/.test(extname(fileName)) && !metadata.path;
-};
 
 function ebookPlugin(options) {
     const optionsOverride = pluginKit.defaultOptions({

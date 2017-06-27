@@ -3,7 +3,7 @@ import htmlToPdf from 'html-pdf';
 import logSymbols from 'log-symbols';
 
 function convertHtmlToPDF(contents, options, filePath) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         console.log(`${logSymbols.info} ${chalk.bold(`Converting : ${filePath}`)}`);
         htmlToPdf.create(contents, options).toFile(filePath, error => {
             const message = error

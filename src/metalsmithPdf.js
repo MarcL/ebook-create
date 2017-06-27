@@ -7,7 +7,7 @@ import metallic from 'metalsmith-metallic';
 import ebook from './ebook';
 import constants from './constants';
 
-function metalSmithPdf(options) {
+function metalSmithPdf() {
     const metadata = {
         title: 'Test EBook Create',
         destination: 'Book description',
@@ -57,7 +57,7 @@ function metalSmithPdf(options) {
                 pdf: pdfOptions
             })
         )
-        .build((error, files) => {
+        .build((error) => {
             if (error) {
                 console.log(error.message);
             }

@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src -d lib",
+    "lint": "eslint src/**.*",
+    "precommit": "yarn run lint",
     "prettier": "prettier --single-quote --tab-width 4 --no-bracket-spacing --write \"src/**/*.js\"",
-    "start": "npm run build && node lib/index.js",
+    "start": "yarn run build && node lib/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -30,6 +32,7 @@
   "devDependencies": {
     "babel-cli": "~6.24.1",
     "babel-preset-env": "~1.5.2",
+    "eslint": "^4.1.1",
     "husky": "^0.13.4",
     "lint-staged": "^4.0.0",
     "prettier": "^1.4.4"

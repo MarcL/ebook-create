@@ -31,7 +31,7 @@ function ebookPlugin(options) {
                 ? `${destinationPath}${fileObject.path}${fileObject.title}.pdf`
                 : `${destinationPath}${bookTitle}.pdf`;
 
-            const pdfOptions = Object.assign({}, options.pdf, {
+            const pdfOptions = Object.assign({}, optionsOverride.pdf, {
                 base: `file://${destinationPath}`
             });
 
